@@ -1,0 +1,108 @@
+{
+  "facilityTypes": {
+    "museum": {
+      "name": "博物館・科学館",
+      "icon": "🏛️",
+      "defaultIndoorRatio": 95,
+      "avgHeatRisk": "low",
+      "description": "文化・科学展示施設"
+    },
+    "aquarium": {
+      "name": "水族館",
+      "icon": "🐟",
+      "defaultIndoorRatio": 100,
+      "avgHeatRisk": "low",
+      "description": "海洋生物展示施設"
+    },
+    "indoor_playground": {
+      "name": "屋内遊び場",
+      "icon": "🎪",
+      "defaultIndoorRatio": 100,
+      "avgHeatRisk": "low",
+      "description": "屋内型の遊戯施設"
+    },
+    "library": {
+      "name": "図書館",
+      "icon": "📚",
+      "defaultIndoorRatio": 100,
+      "avgHeatRisk": "low",
+      "description": "図書・学習施設"
+    },
+    "mall": {
+      "name": "ショッピングモール",
+      "icon": "🏬",
+      "defaultIndoorRatio": 95,
+      "avgHeatRisk": "low",
+      "description": "商業施設"
+    },
+    "zoo": {
+      "name": "動物園",
+      "icon": "🦁",
+      "defaultIndoorRatio": 30,
+      "avgHeatRisk": "high",
+      "description": "動物展示施設"
+    },
+    "park": {
+      "name": "公園",
+      "icon": "🌳",
+      "defaultIndoorRatio": 5,
+      "avgHeatRisk": "very_high",
+      "description": "屋外レクリエーション施設"
+    },
+    "community_center": {
+      "name": "区民館・コミュニティセンター",
+      "icon": "🏢",
+      "defaultIndoorRatio": 90,
+      "avgHeatRisk": "low",
+      "description": "地域住民向け施設"
+    }
+  },
+  "riskLevels": {
+    "low": {
+      "label": "安全",
+      "color": "#d4edda",
+      "textColor": "#155724",
+      "description": "熱中症リスクが低く、安心して利用できます"
+    },
+    "medium": {
+      "label": "注意",
+      "color": "#fff3cd", 
+      "textColor": "#856404",
+      "description": "適度な水分補給と休憩を心がけましょう"
+    },
+    "high": {
+      "label": "要注意",
+      "color": "#f8d7da",
+      "textColor": "#721c24",
+      "description": "長時間の利用は避け、頻繁な休憩を取りましょう"
+    },
+    "very_high": {
+      "label": "危険",
+      "color": "#dc3545",
+      "textColor": "#ffffff",
+      "description": "この時間帯の利用は推奨しません"
+    }
+  },
+  "crowdLevels": {
+    "low": {
+      "label": "空いている",
+      "color": "#28a745",
+      "icon": "😊"
+    },
+    "medium": {
+      "label": "普通",
+      "color": "#ffc107",
+      "icon": "😐"
+    },
+    "high": {
+      "label": "混雑",
+      "color": "#fd7e14",
+      "icon": "😰"
+    },
+    "very_high": {
+      "label": "大変混雑",
+      "color": "#dc3545",
+      "icon": "😵"
+    }
+  }
+}

@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>東京子連れ安全おでかけナビ</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .sidebar {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .map-container {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            height: 600px;
+        }
+        
+        .weather-alert {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(255,107,107,0.4);
+        }
+        
+        .weather-alert h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .temperature {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        
+        .wbgt-value {
+            font-size: 1.5rem;
+            margin-top: 5px;
+        }
+        
+        .filters {
+            margin-bottom: 25px;
+        }
+        
+        .filters h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .filter-group {
+            margin-bottom: 15px;
+        }
+        
+        .filter-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+        
+        .filter-group select, .filter-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-group select:focus, .filter-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
+        }
+        
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            margin-right: 8px;
+            width: auto;
+        }
+        
+        .search-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102,126,234,0.4);
+        }
+        
+        .search-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102,126,234,0.6);
+        }
+        
+        .map-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+        
+        .map-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+        
+        .facility-list {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-top: 20px;
+        }
+        
+        .facility-item {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .facility-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-color: #667eea;
+        }
+        
+        .facility-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .facility-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .info-icon {
+            margin-right: 5px;
+            font-size: 1rem;
+        }
+        
+        .risk-level {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+        
+        .risk-low {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .risk-medium {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .risk-high {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .route-btn {
+            background: #28a745;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .route-btn:hover {
+            background: #218838;
+            transform: translateY(-1px);
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .facility-info {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        
+        .loading::after {
+            content: '';
+            animation: loading 1.5s infinite;
+        }
+        
+        @keyframes loading {
+            0%, 33% { content: '検索中.'; }
+            34%, 66% { content: '検索中..'; }
+            67%, 100% { content: '検索中...'; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌡️ 東京子連れ安全おでかけナビ</h1>
+            <p>祖父母と孫が安心して楽しめる、熱中症対策を考慮した施設案内</p>
+        </div>
+        
+        <div class="main-content">
+            <div class="sidebar">
+                <div class="weather-alert">
+                    <h3>🌡️ 現在の暑さ情報</h3>
+                    <div class="temperature" id="temperature">32°C</div>
+                    <div class="wbgt-value" id="wbgt">暑さ指数: 29 (厳重警戒)</div>
+                </div>
+                
+                <div class="filters">
+                    <h3>🔍 施設検索フィルター</h3>
+                    
+                    <div class="filter-group">
+                        <label>出発地</label>
+                        <input type="text" id="startLocation" placeholder="例: 新宿駅" value="新宿駅">
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label>施設タイプ</label>
+                        <select id="facilityType">
+                            <option value="all">すべて</option>
+                            <option value="museum">博物館・科学館</option>
+                            <option value="aquarium">水族館</option>
+                            <option value="indoor_playground">屋内遊び場</option>
+                            <option value="library">図書館</option>
+                            <option value="mall">ショッピングモール</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label>移動時間（最大）</label>
+                        <select id="travelTime">
+                            <option value="30">30分以内</option>
+                            <option value="45">45分以内</option>
+                            <option value="60">1時間以内</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label>必要な設備</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="wheelchair" checked>
+                                <label for="wheelchair">車椅子対応</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="diaper" checked>
+                                <label for="diaper">おむつ交換台</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="elevator" checked>
+                                <label for="elevator">エレベーター</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="rest_area">
+                                <label for="rest_area">休憩エリア</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="search-btn" onclick="searchFacilities()">
+                        🔍 施設を検索
+                    </button>
+                </div>
+            </div>
+            
+            <div class="map-container">
+                <div class="map-placeholder">
+                    <div class="map-icon">🗺️</div>
+                    <h3>インタラクティブマップ</h3>
+                    <p>施設と推奨ルートを表示<br>（実装時にGoogle Maps APIまたはOpenStreetMap使用）</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="facility-list" id="facilityList">
+            <h3>📍 おすすめ施設一覧</h3>
+            <div class="loading" id="loading" style="display: none;"></div>
+            <div id="facilities">
+                <!-- 施設データはJavaScriptで動的に生成 -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // データ管理クラス
+        class StaticDataManager {
+            constructor() {
+                this.facilities = [];
+                this.facilityTypes = {};
+                this.isLoaded = false;
+            }
+
+            async loadData() {
+                if (this.isLoaded) return;
+
+                try {
+                    // 施設データの読み込み
+                    const facilitiesResponse = await fetch('./data/facilities.json');
+                    const facilitiesData = await facilitiesResponse.json();
+                    
+                    // 施設タイプ定義の読み込み
+                    const typesResponse = await fetch('./data/facility-types.json');  
+                    const typesData = await typesResponse.json();
+                    
+                    this.facilities = facilitiesData.facilities.map(facility => ({
+                        name: facility.name,
+                        type: facility.type,
+                        address: facility.address,
+                        walkTime: facility.nearestStation.walkTime,
+                        indoorRatio: facility.indoorRatio,
+                        facilities: this.convertFacilities(facility.facilities),
+                        riskLevel: facility.heatRisk.level,
+                        description: facility.description,
+                        admission: facility.admission,
+                        highlights: facility.highlights,
+                        crowdLevel: facility.crowdLevel,
+                        coordinates: facility.coordinates
+                    }));
+                    
+                    this.facilityTypes = typesData.facilityTypes;
+                    this.riskLevels = typesData.riskLevels;
+                    this.isLoaded = true;
+                    
+                    console.log(`${this.facilities.length}件の施設データを読み込みました`);
+                    
+                } catch (error) {
+                    console.error('データ読み込みエラー:', error);
+                    // フォールバック用の最小データ
+                    this.facilities = this.getFallbackData();
+                    this.isLoaded = true;
+                }
+            }
+
+            convertFacilities(facilityObj) {
+                const converted = [];
+                if (facilityObj.wheelchair) converted.push('wheelchair');
+                if (facilityObj.diaper) converted.push('diaper');
+                if (facilityObj.elevator) converted.push('elevator');
+                if (facilityObj.restArea) converted.push('rest_area');
+                return converted;
+            }
+
+            getFallbackData() {
+                return [
+                    {
+                        name: "国立科学博物館",
+                        type: "museum",
+                        address: "台東区上野公園7-20",
+                        walkTime: 8,
+                        indoorRatio: 95,
+                        facilities: ["wheelchair", "diaper", "elevator", "rest_area"],
+                        riskLevel: "low",
+                        description: "完全空調完備で夏でも快適。恐竜展示が人気",
+                        admission: { adult: 630, senior: 0, child: 0 },
+                        highlights: ["恐竜展示", "プラネタリウム"]
+                    }
+                ];
+            }
+
+            getFacilities() {
+                return this.facilities;
+            }
+
+            getFacilityTypes() {
+                return this.facilityTypes;
+            }
+        }
+
+        const dataManager = new StaticDataManager();
+        let currentFacilities = [];
+
+        function updateWeatherInfo() {
+            // 実装時は気象庁APIまたは東京暑さマップAPIから取得
+            const now = new Date();
+            const hour = now.getHours();
+            
+            let temp, wbgt, alert;
+            if (hour >= 10 && hour <= 16) {
+                temp = Math.floor(Math.random() * 5) + 30; // 30-34°C
+                wbgt = Math.floor(Math.random() * 4) + 28; // 28-31
+                alert = wbgt >= 31 ? "危険" : wbgt >= 28 ? "厳重警戒" : "警戒";
+            } else {
+                temp = Math.floor(Math.random() * 3) + 25; // 25-27°C  
+                wbgt = Math.floor(Math.random() * 3) + 25; // 25-27
+                alert = "注意";
+            }
+            
+            document.getElementById('temperature').textContent = `${temp}°C`;
+            document.getElementById('wbgt').textContent = `暑さ指数: ${wbgt} (${alert})`;
+        }
+
+        function getRiskLevelClass(level) {
+            switch(level) {
+                case 'low': return 'risk-low';
+                case 'medium': return 'risk-medium'; 
+                case 'high': return 'risk-high';
+                default: return 'risk-medium';
+            }
+        }
+
+        function getRiskLevelText(level) {
+            switch(level) {
+                case 'low': return '安全';
+                case 'medium': return '注意';
+                case 'high': return '要注意';
+                default: return '注意';
+            }
+        }
+
+        function getFacilityIcon(type) {
+            switch(type) {
+                case 'museum': return '🏛️';
+                case 'aquarium': return '🐟';
+                case 'indoor_playground': return '🎪';
+                case 'library': return '📚';
+                case 'mall': return '🏬';
+                case 'zoo': return '🦁';
+                default: return '📍';
+            }
+        }
+
+        function hasFacility(facility, facilityType) {
+            return facility.facilities.includes(facilityType);
+        }
+
+        function renderFacilities(facilities) {
+            const container = document.getElementById('facilities');
+            
+            if (facilities.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #666; padding: 20px;">条件に合う施設が見つかりませんでした。</p>';
+                return;
+            }
+            
+            container.innerHTML = facilities.map(facility => `
+                <div class="facility-item">
+                    <div class="facility-name">
+                        ${getFacilityIcon(facility.type)} ${facility.name}
+                    </div>
+                    <div class="facility-info">
+                        <div class="info-item">
+                            <span class="info-icon">📍</span>
+                            ${facility.address}
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">🚶</span>
+                            徒歩約${facility.walkTime}分
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">🏠</span>
+                            屋内率${facility.indoorRatio}%
+                        </div>
+                        <div class="info-item">
+                            <span class="risk-level ${getRiskLevelClass(facility.riskLevel)}">
+                                熱中症リスク: ${getRiskLevelText(facility.riskLevel)}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="info-item" style="grid-column: 1 / -1;">
+                        <span class="info-icon">♿</span>
+                        ${hasFacility(facility, 'wheelchair') ? '車椅子対応' : ''}
+                        ${hasFacility(facility, 'diaper') ? ' | おむつ交換台' : ''}
+                        ${hasFacility(facility, 'elevator') ? ' | エレベーター' : ''}
+                        ${hasFacility(facility, 'rest_area') ? ' | 休憩エリア' : ''}
+                    </div>
+                    <p style="margin-top: 10px; color: #666; font-size: 0.9rem;">${facility.description}</p>
+                    <button class="route-btn" onclick="showRoute('${facility.name}')">
+                        🗺️ ルートを表示
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function searchFacilities() {
+            const loading = document.getElementById('loading');
+            const facilities = document.getElementById('facilities');
+            
+            loading.style.display = 'block';
+            facilities.style.display = 'none';
+            
+            // 検索条件を取得
+            const facilityType = document.getElementById('facilityType').value;
+            const travelTime = parseInt(document.getElementById('travelTime').value);
+            const requiredFacilities = [];
+            
+            if (document.getElementById('wheelchair').checked) requiredFacilities.push('wheelchair');
+            if (document.getElementById('diaper').checked) requiredFacilities.push('diaper');
+            if (document.getElementById('elevator').checked) requiredFacilities.push('elevator');
+            if (document.getElementById('rest_area').checked) requiredFacilities.push('rest_area');
+            
+            // フィルタリング処理
+            setTimeout(() => {
+                let filtered = currentFacilities.filter(facility => {
+                    // 施設タイプフィルター
+                    if (facilityType !== 'all' && facility.type !== facilityType) {
+                        return false;
+                    }
+                    
+                    // 移動時間フィルター
+                    if (facility.walkTime > travelTime) {
+                        return false;
+                    }
+                    
+                    // 必要設備フィルター
+                    for (let required of requiredFacilities) {
+                        if (!facility.facilities.includes(required)) {
+                            return false;
+                        }
+                    }
+                    
+                    return true;
+                });
+                
+                // 熱中症リスクの低い順、屋内率の高い順でソート
+                filtered.sort((a, b) => {
+                    const riskOrder = { 'low': 0, 'medium': 1, 'high': 2 };
+                    if (riskOrder[a.riskLevel] !== riskOrder[b.riskLevel]) {
+                        return riskOrder[a.riskLevel] - riskOrder[b.riskLevel];
+                    }
+                    return b.indoorRatio - a.indoorRatio;
+                });
+                
+                currentFacilities = filtered;
+                
+                loading.style.display = 'none';
+                facilities.style.display = 'block';
+                renderFacilities(filtered);
+            }, 1000);
+        }
+
+        function showRoute(facilityName) {
+            alert(`${facilityName}への熱中症対策ルートを表示します。\n\n実装時の機能:\n• 屋根付き通路を優先したルート\n• 途中の休憩スポット表示\n• リアルタイム暑さ指数\n• 水分補給ポイント案内`);
+        }
+
+        // 初期化
+        document.addEventListener('DOMContentLoaded', async function() {
+            // データの読み込み
+            await dataManager.loadData();
+            currentFacilities = dataManager.getFacilities();
+            
+            updateWeatherInfo();
+            renderFacilities(currentFacilities);
+            
+            // 5分ごとに気象情報を更新
+            setInterval(updateWeatherInfo, 300000);
+        });
+    </script>
+</body>
+</html>

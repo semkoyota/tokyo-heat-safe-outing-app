@@ -1,0 +1,338 @@
+{
+  "// data/facilities.json - 施設マスターデータ": "",
+  "facilities": [
+
+    {
+      "id": "facility_001",
+      "name": "国立科学博物館",
+      "type": "museum",
+      "address": "東京都台東区上野公園7-20",
+      "coordinates": {
+        "lat": 35.7167,
+        "lng": 139.7763
+      },
+      "nearestStation": {
+        "name": "上野駅",
+        "walkTime": 8,
+        "lines": ["JR山手線", "JR京浜東北線", "東京メトロ銀座線"]
+      },
+      "operatingHours": {
+        "weekday": "9:00-17:00",
+        "weekend": "9:00-17:00",
+        "holiday": "月曜休館"
+      },
+      "indoorRatio": 95,
+      "heatRisk": {
+        "level": "low",
+        "reason": "完全空調、屋内率95%"
+      },
+      "facilities": {
+        "wheelchair": true,
+        "diaper": true,
+        "elevator": true,
+        "restArea": true,
+        "nursing": true,
+        "parking": true,
+        "restaurant": true
+      },
+      "ageRange": {
+        "min": 3,
+        "max": 99,
+        "recommended": "5-15"
+      },
+      "admission": {
+        "adult": 630,
+        "senior": 0,
+        "child": 0,
+        "notes": "65歳以上無料、高校生以下無料"
+      },
+      "description": "恐竜の化石や科学実験展示が豊富。夏でも涼しく過ごせる代表的な屋内施設",
+      "highlights": ["恐竜展示", "プラネタリウム", "体験コーナー"],
+      "crowdLevel": {
+        "weekday_morning": "low",
+        "weekday_afternoon": "medium", 
+        "weekend_morning": "high",
+        "weekend_afternoon": "very_high"
+      },
+      "lastUpdated": "2025-08-08T10:00:00Z"
+    },
+    {
+      "id": "facility_002",
+      "name": "すみだ水族館",
+      "type": "aquarium",
+      "address": "東京都墨田区押上1-1-2 東京スカイツリータウン・ソラマチ5F・6F",
+      "coordinates": {
+        "lat": 35.7101,
+        "lng": 139.8107
+      },
+      "nearestStation": {
+        "name": "とうきょうスカイツリー駅",
+        "walkTime": 3,
+        "lines": ["東武スカイツリーライン"]
+      },
+      "operatingHours": {
+        "weekday": "10:00-20:00",
+        "weekend": "9:00-21:00",
+        "holiday": "年中無休"
+      },
+      "indoorRatio": 100,
+      "heatRisk": {
+        "level": "low",
+        "reason": "完全屋内、スカイツリータウン直結"
+      },
+      "facilities": {
+        "wheelchair": true,
+        "diaper": true,
+        "elevator": true,
+        "restArea": true,
+        "nursing": false,
+        "parking": true,
+        "restaurant": true
+      },
+      "ageRange": {
+        "min": 0,
+        "max": 99,
+        "recommended": "2-12"
+      },
+      "admission": {
+        "adult": 2300,
+        "senior": 1700,
+        "child": 1400,
+        "notes": "3歳以下無料"
+      },
+      "description": "都市型水族館で完全屋内。ペンギンやクラゲの展示が人気",
+      "highlights": ["ペンギン", "クラゲ", "江戸リウム"],
+      "crowdLevel": {
+        "weekday_morning": "low",
+        "weekday_afternoon": "medium",
+        "weekend_morning": "high", 
+        "weekend_afternoon": "very_high"
+      },
+      "lastUpdated": "2025-08-08T10:00:00Z"
+    },
+    {
+      "id": "facility_003",
+      "name": "東京おもちゃ美術館",
+      "type": "indoor_playground",
+      "address": "東京都新宿区四谷4-20 四谷ひろば内",
+      "coordinates": {
+        "lat": 35.6870,
+        "lng": 139.7203
+      },
+      "nearestStation": {
+        "name": "四谷三丁目駅",
+        "walkTime": 7,
+        "lines": ["東京メトロ丸ノ内線", "東京メトロ南北線"]
+      },
+      "operatingHours": {
+        "weekday": "10:00-16:00",
+        "weekend": "10:00-17:00",
+        "holiday": "木曜休館"
+      },
+      "indoorRatio": 100,
+      "heatRisk": {
+        "level": "low",
+        "reason": "完全屋内、木製遊具で涼しい"
+      },
+      "facilities": {
+        "wheelchair": true,
+        "diaper": true,
+        "elevator": false,
+        "restArea": true,
+        "nursing": true,
+        "parking": false,
+        "restaurant": false
+      },
+      "ageRange": {
+        "min": 0,
+        "max": 12,
+        "recommended": "1-8"
+      },
+      "admission": {
+        "adult": 1000,
+        "senior": 500,
+        "child": 800,
+        "notes": "6ヶ月未満無料"
+      },
+      "description": "木のおもちゃで遊べる体験型美術館。3世代で楽しめる",
+      "highlights": ["木のおもちゃ", "手作り体験", "赤ちゃん木育ひろば"],
+      "crowdLevel": {
+        "weekday_morning": "low",
+        "weekday_afternoon": "medium",
+        "weekend_morning": "high",
+        "weekend_afternoon": "high"
+      },
+      "lastUpdated": "2025-08-08T10:00:00Z"
+    },
+    {
+      "id": "facility_004", 
+      "name": "アクアパーク品川",
+      "type": "aquarium",
+      "address": "東京都港区高輪4-10-30 品川プリンスホテル内",
+      "coordinates": {
+        "lat": 35.6284,
+        "lng": 139.7387
+      },
+      "nearestStation": {
+        "name": "品川駅",
+        "walkTime": 2,
+        "lines": ["JR山手線", "JR京浜東北線", "JR東海道線"]
+      },
+      "operatingHours": {
+        "weekday": "10:00-20:00",
+        "weekend": "10:00-22:00", 
+        "holiday": "年中無休"
+      },
+      "indoorRatio": 85,
+      "heatRisk": {
+        "level": "medium",
+        "reason": "大部分屋内だが、イルカスタジアムは屋外"
+      },
+      "facilities": {
+        "wheelchair": true,
+        "diaper": true,
+        "elevator": true,
+        "restArea": true,
+        "nursing": false,
+        "parking": true,
+        "restaurant": true
+      },
+      "ageRange": {
+        "min": 0,
+        "max": 99,
+        "recommended": "3-15"
+      },
+      "admission": {
+        "adult": 2500,
+        "senior": 2200,
+        "child": 1300,
+        "notes": "4歳以上有料"
+      },
+      "description": "品川駅直結で便利。イルカショーが人気だが一部屋外",
+      "highlights": ["イルカショー", "クラゲ", "デジタルアート"],
+      "crowdLevel": {
+        "weekday_morning": "medium",
+        "weekday_afternoon": "high",
+        "weekend_morning": "very_high", 
+        "weekend_afternoon": "very_high"
+      },
+      "lastUpdated": "2025-08-08T10:00:00Z"
+    },
+    {
+      "id": "facility_005",
+      "name": "上野動物園",
+      "type": "zoo",
+      "address": "東京都台東区上野公園9-83",
+      "coordinates": {
+        "lat": 35.7156,
+        "lng": 139.7707
+      },
+      "nearestStation": {
+        "name": "上野駅",
+        "walkTime": 10,
+        "lines": ["JR山手線", "JR京浜東北線"]
+      },
+      "operatingHours": {
+        "weekday": "9:30-17:00",
+        "weekend": "9:30-17:00",
+        "holiday": "月曜休園"
+      },
+      "indoorRatio": 30,
+      "heatRisk": {
+        "level": "high",
+        "reason": "屋外展示多数、日陰少ない"
+      },
+      "facilities": {
+        "wheelchair": true,
+        "diaper": true,
+        "elevator": false,
+        "restArea": true,
+        "nursing": true,
+        "parking": false,
+        "restaurant": true
+      },
+      "ageRange": {
+        "min": 0,
+        "max": 99,
+        "recommended": "2-12"
+      },
+      "admission": {
+        "adult": 600,
+        "senior": 300,
+        "child": 200,
+        "notes": "小学生以下と都内在住65歳以上無料"
+      },
+      "description": "パンダで有名だが屋外展示多め。早朝または夕方の訪問推奨",
+      "highlights": ["パンダ", "ゾウ", "ライオン"],
+      "crowdLevel": {
+        "weekday_morning": "medium",
+        "weekday_afternoon": "high",
+        "weekend_morning": "very_high",
+        "weekend_afternoon": "very_high"
+      },
+      "lastUpdated": "2025-08-08T10:00:00Z"
+    },
+    {
+      "id": "facility_006",
+      "name": "都立中央図書館",
+      "type": "library",
+      "address": "東京都港区南麻布5-7-13",
+      "coordinates": {
+        "lat": 35.6520,
+        "lng": 139.7340
+      },
+      "nearestStation": {
+        "name": "広尾駅",
+        "walkTime": 8,
+        "lines": ["東京メトロ日比谷線"]
+      },
+      "operatingHours": {
+        "weekday": "9:30-20:00",
+        "weekend": "9:30-17:00",
+        "holiday": "第1・3・5月曜、年末年始休館"
+      },
+      "indoorRatio": 100,
+      "heatRisk": {
+        "level": "low",
+        "reason": "完全空調、静かな環境"
+      },
+      "facilities": {
+        "wheelchair": true,
+        "diaper": true,
+        "elevator": true,
+        "restArea": true,
+        "nursing": false,
+        "parking": true,
+        "restaurant": true
+      },
+      "ageRange": {
+        "min": 0,
+        "max": 99,
+        "recommended": "3-99"
+      },
+      "admission": {
+        "adult": 0,
+        "senior": 0,
+        "child": 0,
+        "notes": "無料"
+      },
+      "description": "都内最大級の公立図書館。児童書コーナーも充実",
+      "highlights": ["児童書コーナー", "閲覧席", "学習室"],
+      "crowdLevel": {
+        "weekday_morning": "low",
+        "weekday_afternoon": "medium",
+        "weekend_morning": "medium",
+        "weekend_afternoon": "high"
+      },
+      "lastUpdated": "2025-08-08T10:00:00Z"
+    }
+  ],
+  "metadata": {
+    "version": "1.0.0",
+    "lastUpdated": "2025-08-08T10:00:00Z",
+    "totalFacilities": 6,
+    "dataSource": "静的データ（ハッカソン用）",
+    "updateFrequency": "手動更新"
+  }
+}
+
