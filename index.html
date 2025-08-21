@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>東京子連れ安全おでかけナビ</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>🌡️ 東京子連れ安全おでかけナビ</h1>
+        <p>祖父母と孫が安心して楽しめる、熱中症対策を考慮した施設案内</p>
+      </div>
+
+      <div class="main-content">
+        <div class="sidebar">
+          <div class="weather-alert">
+            <h3>🌡️ 現在の暑さ情報</h3>
+            <div class="temperature" id="temperature">32°C</div>
+            <div class="wbgt-value" id="wbgt">暑さ指数: 29 (厳重警戒)</div>
+          </div>
+
+          <div class="filters">
+            <h3>🔍 施設検索フィルター</h3>
+
+            <div class="filter-group">
+              <label>出発地</label>
+              <input type="text" id="startLocation" placeholder="例: 新宿駅" value="新宿駅" />
+            </div>
+
+            <div class="filter-group">
+              <label>施設タイプ</label>
+              <select id="facilityType">
+                <option value="all">すべて</option>
+                <option value="museum">博物館・科学館</option>
+                <option value="aquarium">水族館</option>
+                <option value="indoor_playground">屋内遊び場</option>
+                <option value="library">図書館</option>
+                <option value="mall">ショッピングモール</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label>移動時間（最大）</label>
+              <select id="travelTime">
+                <option value="30">30分以内</option>
+                <option value="45">45分以内</option>
+                <option value="60">1時間以内</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label>必要な設備</label>
+              <div class="checkbox-group">
+                <div class="checkbox-item">
+                  <input type="checkbox" id="wheelchair" checked />
+                  <label for="wheelchair">車椅子対応</label>
+                </div>
+                <div class="checkbox-item">
+                  <input type="checkbox" id="diaper" checked />
+                  <label for="diaper">おむつ交換台</label>
+                </div>
+                <div class="checkbox-item">
+                  <input type="checkbox" id="elevator" checked />
+                  <label for="elevator">エレベーター</label>
+                </div>
+                <div class="checkbox-item">
+                  <input type="checkbox" id="rest_area" />
+                  <label for="rest_area">休憩エリア</label>
+                </div>
+              </div>
+            </div>
+
+            <button class="search-btn" onclick="searchFacilities()">🔍 施設を検索</button>
+          </div>
+        </div>
+
+        <div class="map-container">
+          <div id="map" style="width: 100%; height: 100%; border-radius: 10px"></div>
+        </div>
+      </div>
+
+      <div class="facility-list" id="facilityList">
+        <h3>📍 おすすめ施設一覧</h3>
+        <div class="loading" id="loading" style="display: none"></div>
+        <div id="facilities">
+          <!-- 施設データはJavaScriptで動的に生成 -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Leaflet.js CDN -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script src="./main.js"></script>
+  </body>
+</html>
