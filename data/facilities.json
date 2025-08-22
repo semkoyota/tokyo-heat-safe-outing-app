@@ -14,7 +14,8 @@
       "nearestStation": {
         "name": "上野駅",
         "walkTime": 8,
-        "lines": ["JR山手線", "JR京浜東北線", "東京メトロ銀座線"]
+        "lines": ["JR山手線", "JR京浜東北線", "東京メトロ銀座線"],
+        "coordinates": { "lat": 35.7130, "lng": 139.7772 }
       },
       "operatingHours": {
         "weekday": "9:00-17:00",
@@ -46,6 +47,15 @@
         "child": 0,
         "notes": "65歳以上無料、高校生以下無料"
       },
+      "price": {
+        "avgPerPerson": 630,
+        "currency": "JPY"
+      },
+      "exertion": {
+        "level": "low",
+        "score": 1,
+        "description": "屋内中心で歩行負荷が小さい"
+      },
       "description": "恐竜の化石や科学実験展示が豊富。夏でも涼しく過ごせる代表的な屋内施設",
       "highlights": ["恐竜展示", "プラネタリウム", "体験コーナー"],
       "crowdLevel": {
@@ -68,7 +78,8 @@
       "nearestStation": {
         "name": "とうきょうスカイツリー駅",
         "walkTime": 3,
-        "lines": ["東武スカイツリーライン"]
+        "lines": ["東武スカイツリーライン"],
+        "coordinates": { "lat": 35.7101, "lng": 139.8107 }
       },
       "operatingHours": {
         "weekday": "10:00-20:00",
@@ -95,10 +106,19 @@
         "recommended": "2-12"
       },
       "admission": {
-        "adult": 2300,
-        "senior": 1700,
-        "child": 1400,
+        "adult": 2500,
+        "senior": 1800,
+        "child": 1200,
         "notes": "3歳以下無料"
+      },
+      "price": {
+        "avgPerPerson": 2300,
+        "currency": "JPY"
+      },
+      "exertion": {
+        "level": "low",
+        "score": 1,
+        "description": "館内は平坦で歩行負荷は少ない"
       },
       "description": "都市型水族館で完全屋内。ペンギンやクラゲの展示が人気",
       "highlights": ["ペンギン", "クラゲ", "江戸リウム"],
@@ -122,7 +142,8 @@
       "nearestStation": {
         "name": "四谷三丁目駅",
         "walkTime": 7,
-        "lines": ["東京メトロ丸ノ内線", "東京メトロ南北線"]
+        "lines": ["東京メトロ丸ノ内線", "東京メトロ南北線"],
+        "coordinates": { "lat": 35.6873, "lng": 139.7249 }
       },
       "operatingHours": {
         "weekday": "10:00-16:00",
@@ -154,6 +175,15 @@
         "child": 800,
         "notes": "6ヶ月未満無料"
       },
+      "price": {
+        "avgPerPerson": 1000,
+        "currency": "JPY"
+      },
+      "exertion": {
+        "level": "medium",
+        "score": 3,
+        "description": "屋内だが遊具で子どもは動き回るため体力消耗は中程度"
+      },
       "description": "木のおもちゃで遊べる体験型美術館。3世代で楽しめる",
       "highlights": ["木のおもちゃ", "手作り体験", "赤ちゃん木育ひろば"],
       "crowdLevel": {
@@ -176,7 +206,8 @@
       "nearestStation": {
         "name": "品川駅",
         "walkTime": 2,
-        "lines": ["JR山手線", "JR京浜東北線", "JR東海道線"]
+        "lines": ["JR山手線", "JR京浜東北線", "JR東海道線"],
+        "coordinates": { "lat": 35.6300, "lng": 139.7390 }
       },
       "operatingHours": {
         "weekday": "10:00-20:00",
@@ -208,6 +239,15 @@
         "child": 1300,
         "notes": "4歳以上有料"
       },
+      "price": {
+        "avgPerPerson": 2500,
+        "currency": "JPY"
+      },
+      "exertion": {
+        "level": "medium",
+        "score": 3,
+        "description": "館内は歩行が必要、一部屋外の観覧があるため中程度の負荷"
+      },
       "description": "品川駅直結で便利。イルカショーが人気だが一部屋外",
       "highlights": ["イルカショー", "クラゲ", "デジタルアート"],
       "crowdLevel": {
@@ -230,7 +270,8 @@
       "nearestStation": {
         "name": "上野駅",
         "walkTime": 10,
-        "lines": ["JR山手線", "JR京浜東北線"]
+        "lines": ["JR山手線", "JR京浜東北線"],
+        "coordinates": { "lat": 35.7130, "lng": 139.7772 }
       },
       "operatingHours": {
         "weekday": "9:30-17:00",
@@ -262,6 +303,15 @@
         "child": 200,
         "notes": "小学生以下と都内在住65歳以上無料"
       },
+      "price": {
+        "avgPerPerson": 600,
+        "currency": "JPY"
+      },
+      "exertion": {
+        "level": "high",
+        "score": 4,
+        "description": "屋外を多く歩く必要があり体力消耗が大きい"
+      },
       "description": "パンダで有名だが屋外展示多め。早朝または夕方の訪問推奨",
       "highlights": ["パンダ", "ゾウ", "ライオン"],
       "crowdLevel": {
@@ -284,7 +334,8 @@
       "nearestStation": {
         "name": "広尾駅",
         "walkTime": 8,
-        "lines": ["東京メトロ日比谷線"]
+        "lines": ["東京メトロ日比谷線"],
+        "coordinates": { "lat": 35.6522, "lng": 139.7245 }
       },
       "operatingHours": {
         "weekday": "9:30-20:00",
@@ -315,6 +366,15 @@
         "senior": 0,
         "child": 0,
         "notes": "無料"
+      },
+      "price": {
+        "avgPerPerson": 0,
+        "currency": "JPY"
+      },
+      "exertion": {
+        "level": "low",
+        "score": 1,
+        "description": "屋内で静かに過ごせるため体力消耗はほとんどない"
       },
       "description": "都内最大級の公立図書館。児童書コーナーも充実",
       "highlights": ["児童書コーナー", "閲覧席", "学習室"],

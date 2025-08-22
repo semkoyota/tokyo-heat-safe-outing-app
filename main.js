@@ -43,7 +43,7 @@ class StaticDataManager {
         name: facility.name,
         type: facility.type,
         address: facility.address,
-        walkTime: facility.nearestStation.walkTime,
+        walkTime: facility.nearestStation ? facility.nearestStation.walkTime : null,
         indoorRatio: facility.indoorRatio,
         facilities: this.convertFacilities(facility.facilities),
         riskLevel: facility.heatRisk.level,
@@ -52,6 +52,10 @@ class StaticDataManager {
         highlights: facility.highlights,
         crowdLevel: facility.crowdLevel,
         coordinates: facility.coordinates,
+        nearestStation: facility.nearestStation || null,
+        operatingHours: facility.operatingHours || null,
+        price: facility.price || null,
+        exertion: facility.exertion || null
       }));
 
       this.facilityTypes = typesData.facilityTypes;
@@ -189,6 +193,22 @@ class LocationService {
       this.watchId = null;
     }
   }
+}
+
+// 新規: 駅名などをNominatimでジオコーディングして座標を取得するヘルパー
+async function geocodePlace(query) {
+  try {
+    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1`;
+    const res = await fetch(url, { headers: { 'Accept-Language': 'ja' } });
+    if (!res.ok) throw new Error('Geocoding HTTP error: ' + res.status);
+    const results = await res.json();
+    if (results && results.length > 0) {
+      return { lat: parseFloat(results[0].lat), lng: parseFloat(results[0].lon), display_name: results[0].display_name };
+    }
+  } catch (e) {
+    console.warn('geocodePlace failed:', e);
+  }
+  return null;
 }
 
 // OSRM APIを使用したルート計算機能
@@ -448,7 +468,7 @@ class RouteDisplayService {
     const startMarker = L.marker([startLocation.lat, startLocation.lng], {
       icon: this.createCustomIcon("🚩", "#007bff"),
     })
-      .bindPopup("📍 現在地")
+      .bindPopup(startLocation.name ? `📍 ${startLocation.name}` : "📍 現在地")
       .addTo(this.markersGroup);
 
     // 目的地マーカー
@@ -615,7 +635,15 @@ function getFacilityIcon(type) {
 }
 
 function hasFacility(facility, facilityType) {
-  return facility.facilities.includes(facilityType);
+  if (!facility || !facility.facilities) return false;
+  // support multiple schemas: array of keys or object with boolean flags
+  if (Array.isArray(facility.facilities)) {
+    return facility.facilities.includes(facilityType);
+  }
+  if (typeof facility.facilities === 'object') {
+    return !!facility.facilities[facilityType];
+  }
+  return false;
 }
 
 function renderFacilities(facilities) {
@@ -628,8 +656,44 @@ function renderFacilities(facilities) {
   }
 
   container.innerHTML = facilities
-    .map(
-      (facility) => `
+    .map((facility) => {
+      // 料金表示のフォールバック
+      let priceLabel = '';
+      if (facility.price && typeof facility.price.avgPerPerson === 'number') {
+        priceLabel = facility.price.avgPerPerson === 0 ? '無料' : `平均料金: ¥${facility.price.avgPerPerson.toLocaleString()}`;
+      } else if (facility.admission && typeof facility.admission.adult === 'number') {
+        priceLabel = facility.admission.adult === 0 ? '無料' : `目安料金: ¥${facility.admission.adult.toLocaleString()}`;
+      }
+
+      // 営業時間表示
+      let hoursLabel = '';
+      if (facility.operatingHours) {
+        const h = facility.operatingHours;
+        const parts = [];
+        if (h.weekday) parts.push(`平日: ${h.weekday}`);
+        if (h.weekend) parts.push(`土日: ${h.weekend}`);
+        if (h.holiday) parts.push(`定休日: ${h.holiday}`);
+        hoursLabel = parts.join(' / ');
+      }
+
+      // 体力スコア表示
+      let exertionLabel = '';
+      if (facility.exertion) {
+        const e = facility.exertion;
+        exertionLabel = `体力スコア: ${e.score} (${e.level || ''})` + (e.description ? ` — ${e.description}` : '');
+      }
+
+      // 最寄り駅表示
+      let stationLabel = '';
+      if (facility.nearestStation) {
+        const s = facility.nearestStation;
+        const lineInfo = Array.isArray(s.lines) && s.lines.length > 0 ? `(${s.lines[0]})` : '';
+        stationLabel = `${s.name || '最寄り駅'} 徒歩約${s.walkTime != null ? s.walkTime + '分' : 'N/A'} ${lineInfo}`;
+      } else if (facility.walkTime != null) {
+        stationLabel = `徒歩約${facility.walkTime}分`;
+      }
+
+      return `
                 <div class="facility-item">
                     <div class="facility-name">
                         ${getFacilityIcon(facility.type)} ${facility.name}
@@ -641,8 +705,26 @@ function renderFacilities(facilities) {
                         </div>
                         <div class="info-item">
                             <span class="info-icon">🚶</span>
-                            徒歩約${facility.walkTime}分
+                            ${stationLabel}
                         </div>
+                        ${hoursLabel ? `
+                        <div class="info-item">
+                            <span class="info-icon">⏰</span>
+                            ${hoursLabel}
+                        </div>
+                        ` : ''}
+                        ${priceLabel ? `
+                        <div class="info-item">
+                            <span class="info-icon">💴</span>
+                            ${priceLabel}
+                        </div>
+                        ` : ''}
+                        ${exertionLabel ? `
+                        <div class="info-item">
+                            <span class="info-icon">💪</span>
+                            ${exertionLabel}
+                        </div>
+                        ` : ''}
                         <div class="info-item">
                             <span class="info-icon">🏠</span>
                             屋内率${facility.indoorRatio}%
@@ -661,12 +743,12 @@ function renderFacilities(facilities) {
                         ${hasFacility(facility, "rest_area") ? " | 休憩エリア" : ""}
                     </div>
                     <p style="margin-top: 10px; color: #666; font-size: 0.9rem;">${facility.description}</p>
-                    <button class="route-btn" onclick="showRoute('${facility.name}')">
+                    <button class="route-btn" onclick="showRoute('${facility.name.replace(/'/g, "\\'") }')">
                         🗺️ ルートを表示
                     </button>
                 </div>
-            `
-    )
+            `;
+    })
     .join("");
 }
 
@@ -736,9 +818,35 @@ async function showRoute(facilityName) {
       return;
     }
 
-    // 現在地を取得
-    const startLocation = await locationService.getCurrentLocation();
-    console.log("現在地取得:", startLocation);
+    // 出発点を決定: まず施設データにnearestStation.coordinatesがあればそれを使う
+    let startLocation = null;
+
+    if (facility.nearestStation && facility.nearestStation.coordinates && typeof facility.nearestStation.coordinates.lat === 'number') {
+      const sc = facility.nearestStation.coordinates;
+      startLocation = { lat: sc.lat, lng: sc.lng, name: facility.nearestStation.name || '最寄り駅' };
+      console.log('施設データのnearestStation.coordinatesを開始点に使用:', startLocation);
+    } else {
+      // 施設データに駅座標がない場合、駅名でジオコーディングを試みる
+      const stationName = facility.nearestStation && facility.nearestStation.name ? facility.nearestStation.name : null;
+
+      if (stationName) {
+        const query = `${stationName} 駅, 東京`;
+        const geo = await geocodePlace(query);
+        if (geo) {
+          startLocation = { lat: geo.lat, lng: geo.lng, name: stationName };
+          console.log('最寄り駅ジオコーディング成功:', stationName, startLocation);
+        } else {
+          console.warn('最寄り駅のジオコーディングに失敗しました:', stationName);
+        }
+      }
+
+      // それでもstartLocationが決まらなければ現在地を使用
+      if (!startLocation) {
+        const curr = await locationService.getCurrentLocation();
+        startLocation = { lat: curr.lat, lng: curr.lng, accuracy: curr.accuracy, name: '現在地' };
+        console.log('現在地を出発点として使用:', startLocation);
+      }
+    }
 
     // ルートを計算
     const route = await routingService.calculateRoute(startLocation, facility.coordinates);
