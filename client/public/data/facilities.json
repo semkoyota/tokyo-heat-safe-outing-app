@@ -1,7 +1,6 @@
 {
   "// data/facilities.json - 施設マスターデータ": "",
   "facilities": [
-
     {
       "id": "facility_001",
       "name": "国立科学博物館",
@@ -15,7 +14,7 @@
         "name": "上野駅",
         "walkTime": 8,
         "lines": ["JR山手線", "JR京浜東北線", "東京メトロ銀座線"],
-        "coordinates": { "lat": 35.7130, "lng": 139.7772 }
+        "coordinates": { "lat": 35.713, "lng": 139.7772 }
       },
       "operatingHours": {
         "weekday": "9:00-17:00",
@@ -60,7 +59,7 @@
       "highlights": ["恐竜展示", "プラネタリウム", "体験コーナー"],
       "crowdLevel": {
         "weekday_morning": "low",
-        "weekday_afternoon": "medium", 
+        "weekday_afternoon": "medium",
         "weekend_morning": "high",
         "weekend_afternoon": "very_high"
       },
@@ -125,7 +124,7 @@
       "crowdLevel": {
         "weekday_morning": "low",
         "weekday_afternoon": "medium",
-        "weekend_morning": "high", 
+        "weekend_morning": "high",
         "weekend_afternoon": "very_high"
       },
       "lastUpdated": "2025-08-08T10:00:00Z"
@@ -136,7 +135,7 @@
       "type": "indoor_playground",
       "address": "東京都新宿区四谷4-20 四谷ひろば内",
       "coordinates": {
-        "lat": 35.6870,
+        "lat": 35.687,
         "lng": 139.7203
       },
       "nearestStation": {
@@ -195,7 +194,7 @@
       "lastUpdated": "2025-08-08T10:00:00Z"
     },
     {
-      "id": "facility_004", 
+      "id": "facility_004",
       "name": "アクアパーク品川",
       "type": "aquarium",
       "address": "東京都港区高輪4-10-30 品川プリンスホテル内",
@@ -207,11 +206,11 @@
         "name": "品川駅",
         "walkTime": 2,
         "lines": ["JR山手線", "JR京浜東北線", "JR東海道線"],
-        "coordinates": { "lat": 35.6300, "lng": 139.7390 }
+        "coordinates": { "lat": 35.63, "lng": 139.739 }
       },
       "operatingHours": {
         "weekday": "10:00-20:00",
-        "weekend": "10:00-22:00", 
+        "weekend": "10:00-22:00",
         "holiday": "年中無休"
       },
       "indoorRatio": 85,
@@ -253,7 +252,7 @@
       "crowdLevel": {
         "weekday_morning": "medium",
         "weekday_afternoon": "high",
-        "weekend_morning": "very_high", 
+        "weekend_morning": "very_high",
         "weekend_afternoon": "very_high"
       },
       "lastUpdated": "2025-08-08T10:00:00Z"
@@ -271,7 +270,7 @@
         "name": "上野駅",
         "walkTime": 10,
         "lines": ["JR山手線", "JR京浜東北線"],
-        "coordinates": { "lat": 35.7130, "lng": 139.7772 }
+        "coordinates": { "lat": 35.713, "lng": 139.7772 }
       },
       "operatingHours": {
         "weekday": "9:30-17:00",
@@ -328,8 +327,8 @@
       "type": "library",
       "address": "東京都港区南麻布5-7-13",
       "coordinates": {
-        "lat": 35.6520,
-        "lng": 139.7340
+        "lat": 35.652,
+        "lng": 139.734
       },
       "nearestStation": {
         "name": "広尾駅",
@@ -395,4 +394,3 @@
     "updateFrequency": "手動更新"
   }
 }
-
