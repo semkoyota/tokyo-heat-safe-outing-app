@@ -15,7 +15,7 @@ function convertFacilitiesField(facilitiesField: unknown): string[] | Record<str
 
 export async function fetchFacilities(): Promise<FacilityFull[]> {
   try {
-    const res = await fetch("/data/facilities.json");
+    const res = await fetch("./data/facilities.json");
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const json = await res.json();
     const raw = Array.isArray(json.facilities) ? json.facilities : [];
