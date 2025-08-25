@@ -1,0 +1,49 @@
+name: deploy to github pages (client)
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20.x]
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install & build (client)
+        run: |
+          cd client
+          npm ci
+          npm run build
+          # make asset paths relative in dist (for GitHub Pages under a repo path)
+          if [ -f ./dist/index.html ]; then
+            sed -i "s/ href=\"\// href=\".\//g" ./dist/index.html || true
+            sed -i "s/ src=\"\// src=\".\//g" ./dist/index.html || true
+            sed -i "s/ href='\// href='.\//g" ./dist/index.html || true
+            sed -i "s/ src='\// src='.\//g" ./dist/index.html || true
+          fi
+
+      - name: Upload pages artifact (client/dist)
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./client/dist
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
