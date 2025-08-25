@@ -8,6 +8,9 @@ let routeDisplayService = null;
 
 // --- 地図初期化 ---
 function initMap() {
+  // Prevent double initialization
+  if (map) return;
+
   // 東京駅を中心に表示
   map = L.map("map").setView([35.681236, 139.767125], 12);
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -811,6 +814,24 @@ function searchFacilities() {
 
 async function showRoute(facilityName) {
   try {
+    // Ensure the map container is visible and map is initialized lazily
+    const mapContainer = document.getElementById('mapContainer');
+    if (mapContainer) {
+      mapContainer.style.display = 'block';
+      // initialize map if not already
+      if (!map) initMap();
+      // allow Leaflet to recalc sizes after being shown
+      setTimeout(() => {
+        try {
+          if (map && typeof map.invalidateSize === 'function') map.invalidateSize();
+        } catch (e) {
+          console.warn('map.invalidateSize failed', e);
+        }
+        // bring map into view smoothly
+        try { mapContainer.scrollIntoView({ behavior: 'smooth' }); } catch (_) {}
+      }, 200);
+    }
+
     // 施設情報を取得
     const facility = currentFacilities.find((f) => f.name === facilityName);
     if (!facility || !facility.coordinates) {
@@ -863,7 +884,7 @@ async function showRoute(facilityName) {
 
 // 初期化
 document.addEventListener("DOMContentLoaded", async function () {
-  initMap();
+  // map は必要時に初期化（遅延ロード）するため initMap() をここでは呼ばない
   // データの読み込み
   await dataManager.loadData();
   currentFacilities = dataManager.getFacilities();
